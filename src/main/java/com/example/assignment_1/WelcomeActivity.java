@@ -18,6 +18,8 @@ public class WelcomeActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private WordListAdapter mAdapter;
     private final LinkedList<String> mWordList = new LinkedList<>();
+    private TextView usernameDisplay;
+    private static final String TEXT_STATE = "currentText";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -27,8 +29,10 @@ public class WelcomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String username = intent.getStringExtra("USERNAME");
 
-        TextView usernameDisplay = findViewById(R.id.usernameDisplay);
-        usernameDisplay.setText("Welcome " + username + "!");
+        usernameDisplay = findViewById(R.id.usernameDisplay);
+        if (savedInstanceState != null){
+            usernameDisplay.setText("Welcome " + username + "!");
+        }
 
         // Initialize data into the word list
         for (int i = 0; i < 20; i++){
@@ -55,10 +59,27 @@ public class WelcomeActivity extends AppCompatActivity {
                 mRecyclerView.getAdapter().notifyItemInserted(wordListSize);
                 // Scroll to the bottom automatically
                 mRecyclerView.smoothScrollToPosition(wordListSize);
+                startTask(v);
             }
         });
 
 
+    }
+
+    /**
+     * Handles the onClick for the fab. Launches AsyncTask which does
+     * work off of the UI thread
+     * @param view - The view (Button) that was clicked
+     */
+    public void startTask(View view){
+        String str = "";
+        // Put a message in the text view
+        usernameDisplay.setText("Blank");
+
+        // Start the AsyncTask
+        // The AsyncTask has a callback that will update the textView
+        new SimpleAsyncTask(usernameDisplay).execute();
+        str += "1";
     }
 }
 
