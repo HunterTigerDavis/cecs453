@@ -1,5 +1,4 @@
 // Hunter Davis
-// Andre Barajas
 package com.example.assignment_1;
 
 import androidx.appcompat.app.AppCompatActivity;
