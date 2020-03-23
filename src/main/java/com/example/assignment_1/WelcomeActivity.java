@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -19,7 +20,6 @@ public class WelcomeActivity extends AppCompatActivity {
     private WordListAdapter mAdapter;
     private final LinkedList<String> mWordList = new LinkedList<>();
     private TextView usernameDisplay;
-    private static final String TEXT_STATE = "currentText";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -54,7 +54,9 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int wordListSize = mWordList.size();
                 // Add a new word to the wordList
-                mWordList.addLast("+ Word " + wordListSize);
+                mWordList.addLast("Word " + wordListSize);
+                Toast invalidToast = Toast.makeText(getApplicationContext(), "New entry added!", Toast.LENGTH_SHORT);
+                invalidToast.show();
                 // Notify the adapter that the data has changed
                 mRecyclerView.getAdapter().notifyItemInserted(wordListSize);
                 // Scroll to the bottom automatically
